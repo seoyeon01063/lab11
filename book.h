@@ -1,13 +1,6 @@
 #pragma once 
 #include<iostream>
 #include <cstdlib>
-// 1. book.h파일에 book class를 인라인으로 구현하려고 합니다. 다음을 확인하여 위 코드를 변경하여 book.h파일을 완성해보세요. 
-// 1-1. 헤더가드, 전처리지시자를 넣으세요.o
-// 1-2. 본인이름학번의 네임스페이스안에 book class를 정의하세요.o
-// 1-3. testID와 testPrice 함수에서 잘못된 부분이 있으면 수정해보세요.? 
-// 1-4. 전위증가연산자, 후위증가연산자를 this를 이용해서 구현하세요. 리턴형식도 참조가 필요하면 참조로 리턴하게 변경하세요. o
-// 1-5. 복합할당연산자 +=를 구현하세요. 매개변수는 int, price에 매개변수를 더해줍니다. this를 이용하세요.  
-
 namespace jangseoyeon2649035
 {
 class book
@@ -33,35 +26,35 @@ public:
     {
         testID(); testPrice();
     }    
-    void input()//book b; b.input();
-    {
+    void input(std::istream& is = std::cin)//book b; b.input();
+    { 
+        // input : 매개변수를 std::istream로 기본값std::cin
+        //std::cin->is
         std::cout << "Enter book title: ";
-        std::getline(std::cin >> std::ws, title);//std::cin >> title;
+        std::getline(is >> std::ws, title);//std::cin >> title;
         std::cout << "Enter book id: ";
-        std::cin >> id; testID();
+        is >> id; testID();
         std::cout << "Enter book price: ";
-        std::cin >> price; testPrice();
+        is >> price; testPrice();
     }
     friend std::istream& operator>>(std::istream& is, book& b)
     {
-        std::cout << "Enter book title: ";
-        std::getline(is >> std::ws, b.title);
-        std::cout << "Enter book id: ";
-        is >> b.id; b.testID();
-        std::cout << "Enter book price: ";
-        is >> b.price; b.testPrice();         
+        b. input(is);      
         return is;
     }        
     void setID(int d){id = d; testID();}
     void setPrice(int p){price = p; testPrice();}
     void setTitle(const std::string& t){title = t;}
-    void print() const
+    void print(std::ostream& os = std::cout) const
     {
-        std::cout << title << "(" << id << "): " << price << " won\n";
+        // output : 매개변수를 std::ostream로 기본값std::cout
+        os << title << "(" ;
+        os.width(4); os.fill('0');
+        os << id << "): " << price << " won\n";
     }
     friend std::ostream& operator<<(std::ostream& os, const book& b)
     {
-        os << b.title << ", " << b.id << ", " << b.price << " won\n";
+        b.print(os);
         return os;
     }
     const std::string& getTitle() const {return title;}

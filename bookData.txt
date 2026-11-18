@@ -1,0 +1,9 @@
+C++ Programing
+1
+10000
+Python Programing
+2
+20000
+Matlab Programing
+3
+30000
